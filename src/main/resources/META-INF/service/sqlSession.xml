@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <import resource="classpath:/META-INF/service/datasource.xml" />
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:/config/mybatis-config.xml" />
+        <property name="mapperLocations" value="classpath:/com/betterhy/db/dao/generate/*.xml, classpath:/com/betterhy/db/dao/extend/*.xml"/>
+        <property name="plugins">
+            <array>
+                <!-- 物理分页插件 -->
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        <value>
+                            <!--   设置数据库类型 oracle,mysql,db2-->
+                            dialect=mysql
+                            <!-- 设置为true时，如果pageSize=0或者RowBounds.limit = 0就会查询出全部的结果 -->
+                            <!-- （相当于没有执行分页查询，但是返回结果仍然是Page类型） -->
+                            pageSizeZero=true
+                            <!-- 3.3.0版本可用 - 分页参数合理化，默认false禁用 -->
+                            <!-- 启用合理化时，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页 -->
+                            <!-- 禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据 -->
+                            reasonable=false
+                            <!-- always总是返回PageInfo类型,check检查返回类型是否为PageInfo,none返回Page -->
+                            returnPageInfo=none
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <!-- dao配置 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.betterhy.db.dao.generate, com.betterhy.db.dao.extend" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    </bean>
+
+<!--    &lt;!&ndash; 支持事务注解（@Transactional）&ndash;&gt;-->
+<!--    <tx:annotation-driven />-->
+<!--    &lt;!&ndash; 配置事务管理器 &ndash;&gt;-->
+<!--    <bean id="transactionManager"-->
+<!--          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+<!--        &lt;!&ndash; 注入数据库连接池 &ndash;&gt;-->
+<!--        <property name="dataSource" ref="dataSource" />-->
+<!--    </bean>-->
+
+    <bean class="com.betterhy.db.DataAccessManager" />
+</beans>

@@ -1,0 +1,51 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password: nihaonihao
+    url: jdbc:mysql://localhost:3306/rainrose?characterEncoding=UTF-8
+    username: root
+  main:
+    allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+app:
+  idGenerator:
+    datacenterId: 0
+    workerId: 1
+
+datasource:
+  filters: ''
+  initialSize: 1
+  maxActive: 250
+  maxPoolPreparedStatementPerConnectionSize: 20
+  maxWait: 3000
+  minEvictableIdleTimeMillis: 300000
+  minIdle: 20
+  poolPreparedStatements: true
+  testOnBorrow: false
+  testOnReturn: false
+  testWhileIdle: true
+  timeBetweenEvictionRunsMillis: 60000
+  validationQuery: select 1
+
+file:
+  upload:
+    path: /home/oa/static/
+
+server:
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+    min-response-size: 1024
+  port: 8090
+
+wx:
+  appId: wx280a4baf2c1b790f
+  secret: a95fad672c0a72b511c944febda40699
+  grantType: authorization_code

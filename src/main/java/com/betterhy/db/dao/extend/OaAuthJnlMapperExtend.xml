@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.betterhy.db.dao.extend.OaAuthJnlMapperExtend">
+    <resultMap id="SigninLaterAuthListResultMap" type="java.util.HashMap">
+        <id column="AUTH_ID" jdbcType="BIGINT" property="authId"/>
+        <result column="APPLY_ID" jdbcType="BIGINT" property="applyId"/>
+        <result column="APPLY_TYPE" jdbcType="INTEGER" property="applyType"/>
+        <result column="USER_ID" jdbcType="INTEGER" property="userId"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="AUTH_USER_ID" jdbcType="INTEGER" property="authUserId"/>
+        <result column="AUTH_USERNAME" jdbcType="VARCHAR" property="authUsername"/>
+        <result column="AUTH_STATUS" jdbcType="INTEGER" property="authStatus"/>
+        <result column="AUTH_REMARK" jdbcType="VARCHAR" property="authRemark"/>
+        <result column="AUTH_DATE" jdbcType="TIMESTAMP" property="authDate"/>
+        <result column="SIGNIN_LATER_DATE" jdbcType="TIMESTAMP" property="signinLaterDate"/>
+        <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+        <result column="DATE_TYPE" jdbcType="INTEGER" property="dateType"/>
+        <result column="APPLY_TIME" jdbcType="TIMESTAMP" property="applyTime"/>
+    </resultMap>
+
+    <select id="signinLaterAuthListQry" parameterType="java.util.HashMap" resultMap="SigninLaterAuthListResultMap">
+        SELECT a.AUTH_ID, a.APPLY_ID, a.APPLY_TYPE, a.USER_ID, a.USERNAME, a.AUTH_USER_ID, a.AUTH_USERNAME,
+               a.AUTH_STATUS, a.AUTH_REMARK, a.AUTH_DATE,
+               b.SIGNIN_LATER_DATE, b.REMARK, b.DATE_TYPE, date_format(APPLY_TIME, '%Y-%m-%d %H:%i:%s') as APPLY_TIME
+        FROM oa_auth_jnl a, oa_signin_later b
+        WHERE a.APPLY_ID = b.SIGNIN_LATER_ID
+        <if test="authStatus != null">
+            AND a.AUTH_STATUS = #{authStatus}
+        </if>
+        <if test="username != null">
+            AND a.USERNAME like concat(concat('%',#{username}),'%')
+        </if>
+        <if test="userId != null">
+            AND a.USER_ID = #{userId}
+        </if>
+        <if test="authUserId != null">
+            AND a.AUTH_USER_ID = #{authUserId}
+        </if>
+        <if test="beginDate != null">
+            AND APPLY_TIME &gt;= #{beginDate}
+        </if>
+        <if test="endDate != null">
+            AND APPLY_TIME &lt;= #{endDate}
+        </if>
+    </select>
+
+    <resultMap id="LeaveAuthListResultMap" type="java.util.HashMap">
+        <id column="AUTH_ID" jdbcType="BIGINT" property="authId"/>
+        <result column="APPLY_ID" jdbcType="BIGINT" property="applyId"/>
+        <result column="APPLY_TYPE" jdbcType="INTEGER" property="applyType"/>
+        <result column="USER_ID" jdbcType="INTEGER" property="userId"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="AUTH_USER_ID" jdbcType="INTEGER" property="authUserId"/>
+        <result column="AUTH_USERNAME" jdbcType="VARCHAR" property="authUsername"/>
+        <result column="AUTH_STATUS" jdbcType="INTEGER" property="authStatus"/>
+        <result column="AUTH_REMARK" jdbcType="VARCHAR" property="authRemark"/>
+        <result column="AUTH_DATE" jdbcType="TIMESTAMP" property="authDate"/>
+        <result column="LEAVE_BEGIN_DATE" jdbcType="TIMESTAMP" property="leaveBeginDate"/>
+        <result column="LEAVE_END_DATE" jdbcType="TIMESTAMP" property="leaveEndDate"/>
+        <result column="BEGIN_DATE_TYPE" jdbcType="INTEGER" property="beginDateType"/>
+        <result column="END_DATE_TYPE" jdbcType="INTEGER" property="endDateType"/>
+        <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+        <result column="APPLY_TIME" jdbcType="TIMESTAMP" property="applyTime"/>
+    </resultMap>
+
+    <select id="leaveAuthListQry" parameterType="java.util.HashMap" resultMap="LeaveAuthListResultMap">
+        SELECT a.AUTH_ID, a.APPLY_ID, a.APPLY_TYPE, a.USER_ID, a.USERNAME, a.AUTH_USER_ID, a.AUTH_USERNAME,
+               a.AUTH_STATUS, a.AUTH_REMARK, a.AUTH_DATE,
+               b.LEAVE_BEGIN_DATE, b.LEAVE_END_DATE, b.BEGIN_DATE_TYPE, b.END_DATE_TYPE, b.REMARK,
+               date_format(APPLY_TIME, '%Y-%m-%d %H:%i:%s') as APPLY_TIME
+        FROM oa_auth_jnl a, oa_leave b
+        WHERE a.APPLY_ID = b.LEAVE_ID
+        <if test="authStatus != null">
+            AND a.AUTH_STATUS = #{authStatus}
+        </if>
+        <if test="username != null">
+            AND a.USERNAME like concat(concat('%',#{username}),'%')
+        </if>
+        <if test="userId != null">
+            AND a.USER_ID = #{userId}
+        </if>
+        <if test="authUserId != null">
+            AND a.AUTH_USER_ID = #{authUserId}
+        </if>
+        <if test="beginDate != null">
+            AND APPLY_TIME &gt;= #{beginDate}
+        </if>
+        <if test="endDate != null">
+            AND APPLY_TIME &lt;= #{endDate}
+        </if>
+    </select>
+
+    <resultMap id="BusinessAuthListResultMap" type="java.util.HashMap">
+        <id column="AUTH_ID" jdbcType="BIGINT" property="authId"/>
+        <result column="APPLY_ID" jdbcType="BIGINT" property="applyId"/>
+        <result column="APPLY_TYPE" jdbcType="INTEGER" property="applyType"/>
+        <result column="USER_ID" jdbcType="INTEGER" property="userId"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="AUTH_USER_ID" jdbcType="INTEGER" property="authUserId"/>
+        <result column="AUTH_USERNAME" jdbcType="VARCHAR" property="authUsername"/>
+        <result column="AUTH_STATUS" jdbcType="INTEGER" property="authStatus"/>
+        <result column="AUTH_REMARK" jdbcType="VARCHAR" property="authRemark"/>
+        <result column="AUTH_DATE" jdbcType="TIMESTAMP" property="authDate"/>
+        <result column="BUSINESS_BEGIN_DATE" jdbcType="TIMESTAMP" property="businessBeginDate"/>
+        <result column="BUSINESS_END_DATE" jdbcType="TIMESTAMP" property="businessEndDate"/>
+        <result column="BEGIN_DATE_TYPE" jdbcType="INTEGER" property="beginDateType"/>
+        <result column="END_DATE_TYPE" jdbcType="INTEGER" property="endDateType"/>
+        <result column="BUSINESS_PLACE" jdbcType="VARCHAR" property="businessPlace"/>
+        <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+        <result column="APPLY_TIME" jdbcType="TIMESTAMP" property="applyTime"/>
+    </resultMap>
+
+    <select id="businessAuthListQry" parameterType="java.util.HashMap" resultMap="BusinessAuthListResultMap">
+        SELECT a.AUTH_ID, a.APPLY_ID, a.APPLY_TYPE, a.USER_ID, a.USERNAME, a.AUTH_USER_ID, a.AUTH_USERNAME,
+               a.AUTH_STATUS, a.AUTH_REMARK, a.AUTH_DATE,
+               b.BUSINESS_BEGIN_DATE, b.BUSINESS_END_DATE, b.BEGIN_DATE_TYPE, b.END_DATE_TYPE, b.BUSINESS_PLACE,
+               b.REMARK, date_format(APPLY_TIME, '%Y-%m-%d %H:%i:%s') as APPLY_TIME
+        FROM oa_auth_jnl a, oa_business b
+        WHERE a.APPLY_ID = b.BUSINESS_ID
+        <if test="authStatus != null">
+            AND a.AUTH_STATUS = #{authStatus}
+        </if>
+        <if test="username != null">
+            AND a.USERNAME like concat(concat('%',#{username}),'%')
+        </if>
+        <if test="userId != null">
+            AND a.USER_ID = #{userId}
+        </if>
+        <if test="authUserId != null">
+            AND a.AUTH_USER_ID = #{authUserId}
+        </if>
+        <if test="beginDate != null">
+            AND APPLY_TIME &gt;= #{beginDate}
+        </if>
+        <if test="endDate != null">
+            AND APPLY_TIME &lt;= #{endDate}
+        </if>
+    </select>
+
+    <resultMap id="PaymentAuthListResultMap" type="java.util.HashMap">
+        <id column="AUTH_ID" jdbcType="BIGINT" property="authId"/>
+        <result column="APPLY_ID" jdbcType="BIGINT" property="applyId"/>
+        <result column="APPLY_TYPE" jdbcType="INTEGER" property="applyType"/>
+        <result column="USER_ID" jdbcType="INTEGER" property="userId"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="AUTH_USER_ID" jdbcType="INTEGER" property="authUserId"/>
+        <result column="AUTH_USERNAME" jdbcType="VARCHAR" property="authUsername"/>
+        <result column="AUTH_STATUS" jdbcType="INTEGER" property="authStatus"/>
+        <result column="AUTH_REMARK" jdbcType="VARCHAR" property="authRemark"/>
+        <result column="AUTH_DATE" jdbcType="TIMESTAMP" property="authDate"/>
+        <result column="AMOUNT" jdbcType="DECIMAL" property="amount"/>
+        <result column="APPLY_TIME" jdbcType="TIMESTAMP" property="applyTime"/>
+        <result column="PAYMENT_REMARK" jdbcType="TIMESTAMP" property="paymentRemark"/>
+        <result column="PAYMENT_ID" jdbcType="TIMESTAMP" property="paymentId"/>
+    </resultMap>
+
+    <select id="paymentAuthListQry" parameterType="java.util.HashMap" resultMap="PaymentAuthListResultMap">
+        SELECT a.AUTH_ID, a.APPLY_ID, a.APPLY_TYPE, a.USER_ID, a.USERNAME, a.AUTH_USER_ID, a.AUTH_USERNAME,
+               a.AUTH_STATUS, a.AUTH_REMARK, a.AUTH_DATE,
+               b.AMOUNT, b.PAYMENT_REMARK, date_format(APPLY_TIME, '%Y-%m-%d %H:%i:%s') as APPLY_TIME,
+               b.PAYMENT_ID
+        FROM oa_auth_jnl a, oa_payment b
+        WHERE a.APPLY_ID = b.PAYMENT_ID
+        <if test="authStatus != null">
+            AND a.AUTH_STATUS = #{authStatus}
+        </if>
+        <if test="username != null">
+            AND a.USERNAME like concat(concat('%',#{username}),'%')
+        </if>
+        <if test="userId != null">
+            AND a.USER_ID = #{userId}
+        </if>
+        <if test="authUserId != null">
+            AND a.AUTH_USER_ID = #{authUserId}
+        </if>
+        <if test="beginDate != null">
+            AND APPLY_TIME &gt;= #{beginDate}
+        </if>
+        <if test="endDate != null">
+            AND APPLY_TIME &lt;= #{endDate}
+        </if>
+    </select>
+
+</mapper>

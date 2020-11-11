@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.betterhy.db.dao.extend.AdminRolePermissionMapperExtend">
+
+  <select id="queryUserPermission" parameterType="java.util.HashMap" resultType="java.lang.String">
+    select PERMISSION_ID
+    from admin_role_permission
+    where ROLE_ID = (
+        select ROLE_ID
+        from oa_user
+        where USER_ID = #{userId}
+    )
+  </select>
+</mapper>

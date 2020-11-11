@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.betterhy.db.dao.extend.MyappStoryMapperExtend">
+    <resultMap id="BaseResultMap" type="java.util.HashMap">
+        <id column="STORY_ID" jdbcType="INTEGER" property="storyId" />
+        <result column="TITLE" jdbcType="VARCHAR" property="title" />
+        <result column="CONTENT" jdbcType="VARCHAR" property="content" />
+        <result column="STORY_ADD_TIME" jdbcType="TIMESTAMP" property="storyAddTime" />
+        <result column="COMMIT_FLAG" jdbcType="VARCHAR" property="commitFlag" />
+        <result column="COMMENT_ID" jdbcType="VARCHAR" property="commentId" />
+        <result column="COMMENT_CONTENT" jdbcType="VARCHAR" property="commentContent" />
+        <result column="COMMENT_ADD_TIME" jdbcType="VARCHAR" property="commentAddTime" />
+    </resultMap>
+
+    <select id="storyQry" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        SELECT ms.STORY_ID, ms.TITLE, ms.CONTENT, ms.ADD_TIME as STORY_ADD_TIME, ms.COMMIT_FLAG,
+               mc.COMMENT_ID, mc.COMMENT_CONTENT, mc.ADD_TIME as COMMENT_ADD_TIME
+        FROM myapp_story ms LEFT JOIN myapp_comment mc on ms.STORY_ID = mc.STORY_ID
+    </select>
+
+
+</mapper>
