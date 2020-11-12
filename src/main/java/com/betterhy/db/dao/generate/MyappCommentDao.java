@@ -5,7 +5,7 @@ import com.betterhy.db.dto.MyappCommentExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface MyappCommentMapper {
+public interface MyappCommentDao {
     long countByExample(MyappCommentExample example);
 
     int deleteByExample(MyappCommentExample example);

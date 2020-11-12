@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.betterhy.db.dao.generate.MyappCommentMapper">
+<mapper namespace="com.betterhy.db.dao.generate.MyappCommentDao">
   <resultMap id="BaseResultMap" type="com.betterhy.db.dto.MyappComment">
     <id column="COMMENT_ID" jdbcType="INTEGER" property="commentId" />
     <result column="STORY_ID" jdbcType="INTEGER" property="storyId" />
@@ -73,7 +73,6 @@
     <if test="distinct">
       distinct
     </if>
-    'false' as QUERYID,
     <include refid="Base_Column_List" />
     from myapp_comment
     <if test="_parameter != null">
@@ -99,19 +98,13 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.betterhy.db.dto.MyappComment">
-    <selectKey keyProperty="commentId" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insert" keyColumn="COMMENT_ID" keyProperty="commentId" parameterType="com.betterhy.db.dto.MyappComment" useGeneratedKeys="true">
     insert into myapp_comment (STORY_ID, COMMENT_CONTENT, ADD_TIME
       )
     values (#{storyId,jdbcType=INTEGER}, #{commentContent,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.betterhy.db.dto.MyappComment">
-    <selectKey keyProperty="commentId" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insertSelective" keyColumn="COMMENT_ID" keyProperty="commentId" parameterType="com.betterhy.db.dto.MyappComment" useGeneratedKeys="true">
     insert into myapp_comment
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="storyId != null">

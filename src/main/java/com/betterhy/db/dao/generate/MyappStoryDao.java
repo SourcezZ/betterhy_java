@@ -5,7 +5,7 @@ import com.betterhy.db.dto.MyappStoryExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface MyappStoryMapper {
+public interface MyappStoryDao {
     long countByExample(MyappStoryExample example);
 
     int deleteByExample(MyappStoryExample example);

@@ -1,8 +1,15 @@
 package com.betterhy.db.dto;
 
+import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
 
-public class MyappComment {
+/**
+ * myapp_comment
+ * @author 
+ */
+@Data
+public class MyappComment implements Serializable {
     private Integer commentId;
 
     private Integer storyId;
@@ -11,35 +18,5 @@ public class MyappComment {
 
     private Date addTime;
 
-    public Integer getCommentId() {
-        return commentId;
-    }
-
-    public void setCommentId(Integer commentId) {
-        this.commentId = commentId;
-    }
-
-    public Integer getStoryId() {
-        return storyId;
-    }
-
-    public void setStoryId(Integer storyId) {
-        this.storyId = storyId;
-    }
-
-    public String getCommentContent() {
-        return commentContent;
-    }
-
-    public void setCommentContent(String commentContent) {
-        this.commentContent = commentContent == null ? null : commentContent.trim();
-    }
-
-    public Date getAddTime() {
-        return addTime;
-    }
-
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
-    }
+    private static final long serialVersionUID = 1L;
 }

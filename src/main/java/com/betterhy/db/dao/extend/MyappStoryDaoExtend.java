@@ -3,7 +3,7 @@ package com.betterhy.db.dao.extend;
 import java.util.List;
 import java.util.Map;
 
-public interface MyappStoryMapperExtend {
+public interface MyappStoryDaoExtend {
     /**
      * 补卡审核列表查询
      * @param param 参数

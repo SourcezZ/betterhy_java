@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.betterhy.db.dao.generate.MyappStoryMapper">
+<mapper namespace="com.betterhy.db.dao.generate.MyappStoryDao">
   <resultMap id="BaseResultMap" type="com.betterhy.db.dto.MyappStory">
     <id column="STORY_ID" jdbcType="INTEGER" property="storyId" />
     <result column="TITLE" jdbcType="VARCHAR" property="title" />
@@ -74,7 +74,6 @@
     <if test="distinct">
       distinct
     </if>
-    'false' as QUERYID,
     <include refid="Base_Column_List" />
     from myapp_story
     <if test="_parameter != null">
@@ -100,19 +99,13 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.betterhy.db.dto.MyappStory">
-    <selectKey keyProperty="storyId" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insert" keyColumn="STORY_ID" keyProperty="storyId" parameterType="com.betterhy.db.dto.MyappStory" useGeneratedKeys="true">
     insert into myapp_story (TITLE, CONTENT, ADD_TIME, 
       COMMIT_FLAG)
     values (#{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
       #{commitFlag,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.betterhy.db.dto.MyappStory">
-    <selectKey keyProperty="storyId" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insertSelective" keyColumn="STORY_ID" keyProperty="storyId" parameterType="com.betterhy.db.dto.MyappStory" useGeneratedKeys="true">
     insert into myapp_story
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="title != null">
