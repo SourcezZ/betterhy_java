@@ -1,6 +1,6 @@
 package com.betterhy;
 
-import com.betterhy.utils.DateUtils;
+import com.betterhy.common.utils.DateUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ImportResource;
  * @author Source
  */
 @ImportResource("classpath:/applicationContext.xml")
-@MapperScan({"com.betterhy.db.dao.generate","com.betterhy.db.dao.extend"})
+@MapperScan({"com.betterhy.common.db.dao.generate","com.betterhy.common.db.dao.extend"})
 @SpringBootApplication
 public class BetterhyApplication {
     static Logger logger = LoggerFactory.getLogger(BetterhyApplication.class);

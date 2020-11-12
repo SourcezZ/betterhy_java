@@ -1,13 +1,12 @@
 package com.betterhy.service;
 
-import com.betterhy.db.DataAccessManager;
-import com.betterhy.db.dao.generate.OaUserMapper;
-import com.betterhy.db.dto.OaUser;
-import com.betterhy.db.dto.OaUserExample;
-import com.betterhy.result.Result;
-import com.betterhy.result.ResultFactory;
-import com.betterhy.utils.BeanUtils;
-import com.betterhy.utils.OaUtils;
+import com.betterhy.common.db.DataAccessManager;
+import com.betterhy.common.db.dao.generate.OaUserMapper;
+import com.betterhy.common.db.dto.OaUser;
+import com.betterhy.common.db.dto.OaUserExample;
+import com.betterhy.common.result.Result;
+import com.betterhy.common.result.ResultFactory;
+import com.betterhy.common.utils.BeanUtils;
 import com.google.common.collect.Maps;
 import com.mysql.jdbc.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -16,7 +15,6 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

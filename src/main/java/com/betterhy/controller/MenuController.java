@@ -1,10 +1,10 @@
 package com.betterhy.controller;
 
-import com.betterhy.db.dto.OaUser;
-import com.betterhy.result.Result;
-import com.betterhy.result.ResultFactory;
-import com.betterhy.utils.OaUtils;
-import com.betterhy.utils.UserUtils;
+import com.betterhy.common.db.dto.OaUser;
+import com.betterhy.common.result.Result;
+import com.betterhy.common.result.ResultFactory;
+import com.betterhy.common.utils.OaUtils;
+import com.betterhy.common.utils.UserUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 

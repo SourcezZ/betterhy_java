@@ -1,9 +1,9 @@
 package com.betterhy.service;
 
-import com.betterhy.constant.Dict;
-import com.betterhy.result.Result;
-import com.betterhy.result.ResultFactory;
-import com.betterhy.utils.OaUtils;
+import com.betterhy.common.constant.Dict;
+import com.betterhy.common.result.Result;
+import com.betterhy.common.result.ResultFactory;
+import com.betterhy.common.utils.OaUtils;
 import com.github.pagehelper.util.StringUtil;
 import com.google.common.collect.Maps;
 import net.sf.json.JSONObject;

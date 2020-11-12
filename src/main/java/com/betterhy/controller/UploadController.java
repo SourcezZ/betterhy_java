@@ -1,6 +1,6 @@
 package com.betterhy.controller;
 
-import com.betterhy.result.Result;
+import com.betterhy.common.result.Result;
 import com.betterhy.service.FileService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

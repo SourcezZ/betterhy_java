@@ -10,7 +10,7 @@ http://www.springframework.org/schema/tx
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:/config/mybatis-config.xml" />
-        <property name="mapperLocations" value="classpath:/com/betterhy/db/dao/generate/*.xml, classpath:/com/betterhy/db/dao/extend/*.xml"/>
+        <property name="mapperLocations" value="classpath:/com/betterhy/common/db/dao/generate/*.xml, classpath:/com/betterhy/common/db/dao/extend/*.xml"/>
         <property name="plugins">
             <array>
                 <!-- 物理分页插件 -->
@@ -37,7 +37,7 @@ http://www.springframework.org/schema/tx
 
     <!-- dao配置 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.betterhy.db.dao.generate, com.betterhy.db.dao.extend" />
+        <property name="basePackage" value="com.betterhy.common.db.dao.generate, com.betterhy.common.db.dao.extend" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
 
@@ -50,5 +50,5 @@ http://www.springframework.org/schema/tx
 <!--        <property name="dataSource" ref="dataSource" />-->
 <!--    </bean>-->
 
-    <bean class="com.betterhy.db.DataAccessManager" />
+    <bean class="com.betterhy.common.db.DataAccessManager" />
 </beans>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.betterhy.common.db.dao.generate.MyappCommentDao">
+  <resultMap id="BaseResultMap" type="com.betterhy.common.db.dto.MyappComment">
+    <id column="COMMENT_ID" jdbcType="INTEGER" property="commentId" />
+    <result column="STORY_ID" jdbcType="INTEGER" property="storyId" />
+    <result column="COMMENT_CONTENT" jdbcType="VARCHAR" property="commentContent" />
+    <result column="ADD_TIME" jdbcType="TIMESTAMP" property="addTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    COMMENT_ID, STORY_ID, COMMENT_CONTENT, ADD_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.betterhy.common.db.dto.MyappCommentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from myapp_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from myapp_comment
+    where COMMENT_ID = #{commentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from myapp_comment
+    where COMMENT_ID = #{commentId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.betterhy.common.db.dto.MyappCommentExample">
+    delete from myapp_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="COMMENT_ID" keyProperty="commentId" parameterType="com.betterhy.common.db.dto.MyappComment" useGeneratedKeys="true">
+    insert into myapp_comment (STORY_ID, COMMENT_CONTENT, ADD_TIME
+      )
+    values (#{storyId,jdbcType=INTEGER}, #{commentContent,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="COMMENT_ID" keyProperty="commentId" parameterType="com.betterhy.common.db.dto.MyappComment" useGeneratedKeys="true">
+    insert into myapp_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="storyId != null">
+        STORY_ID,
+      </if>
+      <if test="commentContent != null">
+        COMMENT_CONTENT,
+      </if>
+      <if test="addTime != null">
+        ADD_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="storyId != null">
+        #{storyId,jdbcType=INTEGER},
+      </if>
+      <if test="commentContent != null">
+        #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.betterhy.common.db.dto.MyappCommentExample" resultType="java.lang.Long">
+    select count(*) from myapp_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update myapp_comment
+    <set>
+      <if test="record.commentId != null">
+        COMMENT_ID = #{record.commentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.storyId != null">
+        STORY_ID = #{record.storyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentContent != null">
+        COMMENT_CONTENT = #{record.commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addTime != null">
+        ADD_TIME = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update myapp_comment
+    set COMMENT_ID = #{record.commentId,jdbcType=INTEGER},
+      STORY_ID = #{record.storyId,jdbcType=INTEGER},
+      COMMENT_CONTENT = #{record.commentContent,jdbcType=VARCHAR},
+      ADD_TIME = #{record.addTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.betterhy.common.db.dto.MyappComment">
+    update myapp_comment
+    <set>
+      <if test="storyId != null">
+        STORY_ID = #{storyId,jdbcType=INTEGER},
+      </if>
+      <if test="commentContent != null">
+        COMMENT_CONTENT = #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        ADD_TIME = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where COMMENT_ID = #{commentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.betterhy.common.db.dto.MyappComment">
+    update myapp_comment
+    set STORY_ID = #{storyId,jdbcType=INTEGER},
+      COMMENT_CONTENT = #{commentContent,jdbcType=VARCHAR},
+      ADD_TIME = #{addTime,jdbcType=TIMESTAMP}
+    where COMMENT_ID = #{commentId,jdbcType=INTEGER}
+  </update>
+</mapper>

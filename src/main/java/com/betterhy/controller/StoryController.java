@@ -1,21 +1,19 @@
 package com.betterhy.controller;
 
-import com.betterhy.db.DataAccessManager;
-import com.betterhy.db.dao.generate.MyappCommentDao;
-import com.betterhy.db.dao.generate.MyappStoryDao;
-import com.betterhy.db.dto.MyappComment;
-import com.betterhy.db.dto.MyappCommentExample;
-import com.betterhy.db.dto.MyappStory;
-import com.betterhy.db.dto.MyappStoryExample;
-import com.betterhy.result.Result;
-import com.betterhy.result.ResultFactory;
-import com.betterhy.utils.SqlUtils;
-import com.github.pagehelper.PageHelper;
+import com.betterhy.common.db.DataAccessManager;
+import com.betterhy.common.db.dao.generate.MyappCommentDao;
+import com.betterhy.common.db.dao.generate.MyappStoryDao;
+import com.betterhy.common.db.dto.MyappComment;
+import com.betterhy.common.db.dto.MyappCommentExample;
+import com.betterhy.common.db.dto.MyappStory;
+import com.betterhy.common.db.dto.MyappStoryExample;
+import com.betterhy.common.result.Result;
+import com.betterhy.common.result.ResultFactory;
+import com.betterhy.common.utils.SqlUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

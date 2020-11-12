@@ -47,5 +47,5 @@ server:
 
 
 mybatis_config_file: config/mybatis-config.xml
-mapper_path: com.betterhy.db.dao.generate, com.betterhy.db.dao.extend
-entity_package: com.betterhy.db.dto
+mapper_path: com.betterhy.common.db.dao.generate, com.betterhy.common.db.dao.extend
+entity_package: com.betterhy.common.db.dto

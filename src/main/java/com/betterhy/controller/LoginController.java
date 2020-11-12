@@ -1,8 +1,8 @@
 package com.betterhy.controller;
 
-import com.betterhy.db.dto.OaUser;
-import com.betterhy.result.Result;
-import com.betterhy.result.ResultFactory;
+import com.betterhy.common.db.dto.OaUser;
+import com.betterhy.common.result.Result;
+import com.betterhy.common.result.ResultFactory;
 import com.betterhy.service.LoginService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
