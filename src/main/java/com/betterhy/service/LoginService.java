@@ -33,15 +33,6 @@ import java.util.Map;
 @Service
 public class LoginService {
 
-    @Value("${wx.appId}")
-    private String appId;
-
-    @Value("${wx.secret}")
-    private String secret;
-
-    @Value("${wx.grantType}")
-    private String grantType;
-
     /**
      * 登陆
      * @param reqMap 请求map
@@ -63,7 +54,7 @@ public class LoginService {
                 return ResultFactory.buildFailResult("抱歉，该小程序只对公司内部员工开放");
             }
         }else {
-            String openId = OaUtils.getOpenId(appId, secret, code, grantType);
+            String openId = "";
             if (StringUtils.isNullOrEmpty(openId)){
                 return ResultFactory.buildFailResult("获取openId失败");
             }
@@ -87,31 +78,6 @@ public class LoginService {
                 return ResultFactory.buildSuccessResult(result);
             }
 
-            /*  待人员录入完成后，放开
-            //首次登陆 插入数据库
-            if (list.isEmpty()){
-                OaUserExample unNormalExample = new OaUserExample();
-                unNormalExample.createCriteria().andOpenIdEqualTo(openId).andStatusEqualTo(0);
-                List<OaUser> unNormalList = DataAccessManager.getMapper(OaUserMapper.class).selectByExample(unNormalExample);
-                if (!unNormalList.isEmpty()){
-                    return ResultFactory.buildFailResult("抱歉，该小程序只对公司内部员工开放");
-                }
-
-                String password = "123";
-                // 得到 hash 后的密码
-                String encodedPassword = new SimpleHash("md5", password).toString();
-                user.setPassword(encodedPassword);
-                user.setOpenId(openId);
-                user.setRoleId("applyUser");
-                user.setRankId(2);
-                user.setStatus(0);
-                DataAccessManager.getMapper(OaUserMapper.class).insertSelective(user);
-
-                result.put("status", "F");
-                result.put("user", user);
-                return ResultFactory.buildSuccessResult(result);
-            }
-            */
             user = list.get(0);
             if (StringUtils.isNullOrEmpty(user.getUsername())){
                 result.put("status", "F");
