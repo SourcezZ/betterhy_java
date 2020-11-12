@@ -9,6 +9,8 @@ import com.betterhy.db.dto.MyappStory;
 import com.betterhy.db.dto.MyappStoryExample;
 import com.betterhy.result.Result;
 import com.betterhy.result.ResultFactory;
+import com.betterhy.utils.SqlUtils;
+import com.github.pagehelper.PageHelper;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +38,7 @@ public class StoryController {
     public Result storyQry(@RequestBody Map<String, Object> reqMap) {
         MyappStoryExample example = new MyappStoryExample();
         example.setOrderByClause("ADD_TIME DESC");
+        SqlUtils.startPage(1, 10);
         List<MyappStory> storyList = DataAccessManager.getMapper(MyappStoryDao.class).selectByExample(example);
         Map<String, Object> map = new HashMap<String, Object>((int) ((1/0.75) + 1)){{put("list", storyList);}};
         return ResultFactory.buildSuccessResult(map);

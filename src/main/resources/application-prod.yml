@@ -44,3 +44,8 @@ server:
     mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
     min-response-size: 1024
   port: 8090
+
+
+mybatis_config_file: config/mybatis-config.xml
+mapper_path: com.betterhy.db.dao.generate, com.betterhy.db.dao.extend
+entity_package: com.betterhy.db.dto
