@@ -8,7 +8,7 @@ import com.betterhy.common.result.Result;
 import com.betterhy.common.result.ResultFactory;
 import com.betterhy.common.utils.BeanUtils;
 import com.google.common.collect.Maps;
-import com.mysql.jdbc.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -41,11 +41,11 @@ public class LoginService {
         OaUser user = BeanUtils.map2Bean(reqMap, OaUser.class);
 
         String code = (String) reqMap.get("code");
-        if (StringUtils.isNullOrEmpty(code) && StringUtils.isNullOrEmpty(user.getUsername())){
+        if (StringUtils.isEmpty(code) && StringUtils.isEmpty(user.getUsername())){
             return ResultFactory.buildFailResult("code或username不能为空");
         }
 
-        if (!StringUtils.isNullOrEmpty(user.getUsername())){
+        if (!StringUtils.isEmpty(user.getUsername())){
             // 首次登陆，走输入用户名的流程
             user = updateUserName(user);
             if (user.getStatus() == 0){
@@ -53,7 +53,7 @@ public class LoginService {
             }
         }else {
             String openId = "";
-            if (StringUtils.isNullOrEmpty(openId)){
+            if (StringUtils.isEmpty(openId)){
                 return ResultFactory.buildFailResult("获取openId失败");
             }
             OaUserExample example = new OaUserExample();
@@ -77,7 +77,7 @@ public class LoginService {
             }
 
             user = list.get(0);
-            if (StringUtils.isNullOrEmpty(user.getUsername())){
+            if (StringUtils.isEmpty(user.getUsername())){
                 result.put("status", "F");
                 result.put("user", user);
                 return ResultFactory.buildSuccessResult(result);
