@@ -51,7 +51,7 @@ public class WebLogAspect {
         // 记录下请求内容
         logger.info("URL : " + request.getRequestURL().toString());
         logger.info("HTTP_METHOD : " + request.getMethod());
-        logger.info("IP : " + request.getRemoteAddr());
+        logger.info("IP : " + OaUtils.getClientIpAddr(request));
         StringBuilder args = new StringBuilder();
         try {
             if (!request.getContentType().startsWith(FILE_CONTENT_TYPE)){
