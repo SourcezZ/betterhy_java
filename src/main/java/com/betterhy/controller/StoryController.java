@@ -28,7 +28,7 @@ import java.util.Map;
 public class StoryController {
 
     /**
-     * 请假申请
+     * 话题查询
      * @param reqMap 请求map
      * @return Result
      */
@@ -41,6 +41,11 @@ public class StoryController {
         return ResultFactory.buildSuccessResult(map);
     }
 
+    /**
+     * 评论查询
+     * @param reqMap 请求map
+     * @return Result
+     */
     @PostMapping("/api/commentQry")
     public Result commentQry(@RequestBody Map<String, Object> reqMap) {
         List<MyappComment> commentList = DataAccessManager.getMapper(MyappCommentDao.class).selectByExample(new MyappCommentExample());
@@ -48,14 +53,24 @@ public class StoryController {
         return ResultFactory.buildSuccessResult(map);
     }
 
+    /**
+     * 新增话题
+     * @param story MyappStory请求体
+     * @return Result
+     */
     @PostMapping("/api/addStory")
     public Result addStory(@RequestBody MyappStory story) {
         DataAccessManager.getMapper(MyappStoryDao.class).insertSelective(story);
         return ResultFactory.buildSuccessResult();
     }
 
+    /**
+     * 新增评论
+     * @param comment MyappComment请求体
+     * @return Result
+     */
     @PostMapping("/api/addComment")
-    public Result addStory(@RequestBody MyappComment comment) {
+    public Result addComment(@RequestBody MyappComment comment) {
         DataAccessManager.getMapper(MyappCommentDao.class).insertSelective(comment);
         return ResultFactory.buildSuccessResult();
     }
