@@ -9,7 +9,7 @@ import com.betterhy.common.db.dto.MyappStory;
 import com.betterhy.common.db.dto.MyappStoryExample;
 import com.betterhy.common.result.Result;
 import com.betterhy.common.result.ResultFactory;
-import com.betterhy.common.utils.SqlUtils;
+import com.betterhy.common.utils.MailUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,8 +59,9 @@ public class StoryController {
      * @return Result
      */
     @PostMapping("/api/addStory")
-    public Result addStory(@RequestBody MyappStory story) {
+    public Result addStory(@RequestBody MyappStory story) throws Exception {
         DataAccessManager.getMapper(MyappStoryDao.class).insertSelective(story);
+        MailUtils.sendEmail(story.getContent());
         return ResultFactory.buildSuccessResult();
     }
 
@@ -72,6 +73,10 @@ public class StoryController {
     @PostMapping("/api/addComment")
     public Result addComment(@RequestBody MyappComment comment) {
         DataAccessManager.getMapper(MyappCommentDao.class).insertSelective(comment);
+        MyappStory record = new MyappStory();
+        record.setStoryId(comment.getStoryId());
+        record.setCommitFlag("1");
+        DataAccessManager.getMapper(MyappStoryDao.class).updateByPrimaryKeySelective(record);
         return ResultFactory.buildSuccessResult();
     }
 
