@@ -254,48 +254,38 @@ public class OaUtils {
 //        logger.info("X-Forwarded-For:" + ip);
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
-            logger.info("Proxy-Client-IP:" + ip);
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
-            logger.info("WL-Proxy-Client-IP:" + ip);
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-            logger.info("HTTP_X_FORWARDED_FOR:" + ip);
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_X_FORWARDED");
-            logger.info("HTTP_X_FORWARDED:" + ip);
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_X_CLUSTER_CLIENT_IP");
-            logger.info("HTTP_X_CLUSTER_CLIENT_IP:" + ip);
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_CLIENT_IP");
-            logger.info("HTTP_CLIENT_IP:" + ip);
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_FORWARDED_FOR");
-            logger.info("HTTP_FORWARDED_FOR:" + ip);
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_FORWARDED");
-            logger.info("HTTP_FORWARDED:" + ip);
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_VIA");
-            logger.info("HTTP_VIA:" + ip);
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("REMOTE_ADDR");
-            logger.info("REMOTE_ADDR:" + ip);
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
-            logger.info("getRemoteAddr:" + ip);
         }
+        logger.info("IP:" + ip);
         return ip;
     }
 
