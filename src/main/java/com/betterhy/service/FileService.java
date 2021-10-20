@@ -4,6 +4,7 @@ import com.betterhy.common.constant.Dict;
 import com.betterhy.common.result.Result;
 import com.betterhy.common.result.ResultFactory;
 import com.betterhy.common.utils.OaUtils;
+import com.betterhy.common.utils.ViapiFileUtilAdvance;
 import com.github.pagehelper.util.StringUtil;
 import com.google.common.collect.Maps;
 import net.sf.json.JSONObject;
@@ -15,11 +16,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,6 +79,89 @@ public class FileService {
             logger.error(e.toString(), e);
         }
         return ResultFactory.buildFailResult("上传失败");
+    }
+
+    public Result transformUpload(Map<String, Object> reqMap, MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResultFactory.buildFailResult("上传失败，不能上传空文件");
+        }
+
+        //小程序无法获取文件原始名字，让用户重新命名
+        String fileName = (String) reqMap.get(Dict.FILE_NAME);
+        if (StringUtil.isEmpty(fileName)) {
+            return ResultFactory.buildFailResult("上传失败，文件名不能为空");
+        }
+
+        String absolutePath = new File(fileRootPath).getAbsolutePath() + "/";
+
+        String path = (String) reqMap.get("path");
+        path = path == null || path.isEmpty() ? absolutePath : absolutePath + path;
+
+        File staticPath = new File(absolutePath);
+        if (!staticPath.exists()) {
+            boolean mk = staticPath.mkdirs();
+            logger.info(mk ? "创建路径成功" : "创建路径失败");
+        }
+        File dest = new File(path + fileName);
+        if (dest.exists()) {
+            fileName = OaUtils.renameUploadFileName(fileName);
+            dest = new File(absolutePath + fileName);
+            logger.info("同名文件已存在，用时间后辍重命名新文件");
+        }
+        try {
+            file.transferTo(dest);
+            logger.info("上传成功");
+            String ossUrl = ViapiFileUtilAdvance.generateTempUrl(dest.getAbsolutePath());
+            Map<String, Object> map = ViapiFileUtilAdvance.generateHumanPicMap(ossUrl, (String) reqMap.get("type"));
+            String imageUrl = (String) ((Map<String, Object>)((Map<String, Object>) map.get("body")).get("Data")).get("ImageURL");
+            download(imageUrl, absolutePath + OaUtils.renameUploadFileName(fileName));
+            return ResultFactory.buildSuccessResult(imageUrl);
+        } catch (IOException e) {
+            logger.error(e.toString(), e);
+        }
+        return ResultFactory.buildFailResult("上传失败");
+    }
+
+    /**
+     * 根据链接地址下载文件
+     * @param downloadUrl 文件链接地址
+     * @param path        下载存放文件地址 + 文件名
+     */
+    private static void download(String downloadUrl, String path) {
+        URL url = null;
+        DataInputStream dataInputStream = null;
+        FileOutputStream fileOutputStream = null;
+        try {
+            url = new URL(downloadUrl);
+            dataInputStream = new DataInputStream(url.openStream());
+            fileOutputStream = new FileOutputStream(new File(path));
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+            byte[] buffer = new byte[1024];
+            int length;
+
+            while ((length = dataInputStream.read(buffer)) > 0) {
+                output.write(buffer, 0, length);
+            }
+            fileOutputStream.write(output.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (dataInputStream != null){
+                try {
+                    dataInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (fileOutputStream != null){
+                try {
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public String downLoad(Map<String, Object> reqMap, HttpServletResponse res) {

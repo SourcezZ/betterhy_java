@@ -31,7 +31,7 @@ public class UploadController {
      */
     @PostMapping("/api/oaUploadFile")
     public Result upload(@RequestParam Map<String, Object> reqMap, @RequestParam("file") MultipartFile file) {
-        return fileService.upload(reqMap, file);
+        return fileService.transformUpload(reqMap, file);
     }
 
     /**
