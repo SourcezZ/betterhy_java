@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     password: 123456
-    url: jdbc:mysql://192.168.110.20:3306/rainrose
+    url: jdbc:mysql://192.168.3.20:3306/rainrose
     username: root
   main:
     allow-bean-definition-overriding: true
