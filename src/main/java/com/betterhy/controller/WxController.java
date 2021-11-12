@@ -4,6 +4,7 @@ import com.betterhy.common.db.DataAccessManager;
 import com.betterhy.common.db.dao.generate.MyappSigninDao;
 import com.betterhy.common.db.dto.MyappSignin;
 import com.betterhy.common.db.dto.MyappSigninExample;
+import com.betterhy.common.utils.DateUtils;
 import com.betterhy.common.utils.MessageUtil;
 import com.betterhy.common.utils.WeixinCheckoutUtil;
 import org.dom4j.DocumentException;
@@ -62,6 +63,8 @@ public class WxController {
         }
         response.setContentType("text/html;charset=UTF-8");
 
+        logger.info(requestMap.toString());
+
         //发送方帐号(open_id)
         String fromUserName = requestMap.get("FromUserName");
         //公众帐号
@@ -74,11 +77,12 @@ public class WxController {
         String weixinContent = requestMap.get("Content");
         logger.info("公众号用户发送过来的文本消息内容："+weixinContent);
 
-        String content = "你好,已接收到内容。";
+        StringBuilder content = new StringBuilder("你好,已接收到内容。");
 
         if (weixinContent.startsWith("a")){
+            content = new StringBuilder();
             String size = weixinContent.replace("a", "");
-            int limit = 2;
+            int limit = 5;
             if (size.length() != 0){
                 try {
                     limit = Integer.parseInt(size);
@@ -88,7 +92,18 @@ public class WxController {
             MyappSigninExample example = new MyappSigninExample();
             example.setOrderByClause("CREATE_TIME DESC LIMIT " + limit);
             List<MyappSignin> list = DataAccessManager.getMapper(MyappSigninDao.class).selectByExample(example);
-            content = list.toString();
+            for (MyappSignin myappSignin : list) {
+                String status = "0".equals(myappSignin.getSignInFlag()) ? "未打" :
+                        "1".equals(myappSignin.getSignInFlag()) ? "已打" : "异常";
+                int signHour = Integer.parseInt(myappSignin.getSignInTime().substring(0,2));
+
+                String tmp = "ID:" + myappSignin.getId();
+                tmp += "\n打卡类型:" + (signHour >=31 ? "上午" : "下午");
+                tmp += "\n打卡时间:" + myappSignin.getSignInTime();
+                tmp += "\n状态:" + status;
+                tmp += "\n更新时间:" + DateUtils.getDate(myappSignin.getUpdateTime(), DateUtils.DATETIME_FORMAT);
+                content.append(tmp).append("\n\n");
+            }
         }
 
         String respMessage = "<xml>"
