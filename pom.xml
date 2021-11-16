@@ -208,6 +208,7 @@
                 <configuration>
                     <mainClass>com.betterhy.BetterhyApplication</mainClass>
                     <layout>ZIP</layout>
+                    <!--若要有依赖变更，需要打包依赖，请注释下方includes-->
                     <includes>
                         <include>
                             <groupId>nothing</groupId>
