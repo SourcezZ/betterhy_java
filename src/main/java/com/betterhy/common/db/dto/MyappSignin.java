@@ -21,6 +21,8 @@ public class MyappSignin implements Serializable {
 
     private String errorInfo;
 
+    private String userName;
+
     private Date createTime;
 
     private Date updateTime;
