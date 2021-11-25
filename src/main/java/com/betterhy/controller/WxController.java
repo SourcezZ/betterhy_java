@@ -93,10 +93,11 @@ public class WxController {
             example.createCriteria().andUserNameEqualTo("heyuan");
             example.setOrderByClause("ID DESC LIMIT " + limit);
             List<MyappSignin> list = DataAccessManager.getMapper(MyappSigninDao.class).selectByExample(example);
-            for (MyappSignin myappSignin : list) {
+            for (int i = list.size() - 1; i >= 0; i--) {
+                MyappSignin myappSignin = list.get(i);
                 String status = "0".equals(myappSignin.getSignInFlag()) ? "未打" :
                         "1".equals(myappSignin.getSignInFlag()) ? "已打":
-                        "9".equals(myappSignin.getSignInFlag()) ? "手动" : "异常" ;
+                                "9".equals(myappSignin.getSignInFlag()) ? "手动" : "异常" ;
                 int signHour = Integer.parseInt(myappSignin.getSignInTime().split(":")[0]);
 
                 String tmp = "ID:" + myappSignin.getId();
