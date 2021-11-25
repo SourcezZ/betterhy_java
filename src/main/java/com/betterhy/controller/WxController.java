@@ -90,15 +90,17 @@ public class WxController {
                 }
             }
             MyappSigninExample example = new MyappSigninExample();
-            example.setOrderByClause("CREATE_TIME DESC LIMIT " + limit);
+            example.createCriteria().andUserNameEqualTo("heyuan");
+            example.setOrderByClause("ID DESC LIMIT " + limit);
             List<MyappSignin> list = DataAccessManager.getMapper(MyappSigninDao.class).selectByExample(example);
             for (MyappSignin myappSignin : list) {
                 String status = "0".equals(myappSignin.getSignInFlag()) ? "未打" :
-                        "1".equals(myappSignin.getSignInFlag()) ? "已打" : "异常";
+                        "1".equals(myappSignin.getSignInFlag()) ? "已打":
+                        "9".equals(myappSignin.getSignInFlag()) ? "手动" : "异常" ;
                 int signHour = Integer.parseInt(myappSignin.getSignInTime().split(":")[0]);
 
                 String tmp = "ID:" + myappSignin.getId();
-                tmp += "\n打卡类型:" + (signHour >=31 ? "上午" : "下午");
+                tmp += "\n打卡类型:" + (signHour ==8 ? "上班" : "下班");
                 tmp += "\n打卡时间:" + myappSignin.getSignInTime();
                 tmp += "\n状态:" + status;
                 tmp += "\n更新时间:" + DateUtils.getDate(myappSignin.getUpdateTime(), DateUtils.DATETIME_FORMAT);
