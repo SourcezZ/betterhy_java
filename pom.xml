@@ -199,6 +199,20 @@
             <artifactId>xstream</artifactId>
             <version>1.4.11.1</version>
         </dependency>
+
+        <!--GeoLite2-->
+        <dependency>
+            <groupId>com.maxmind.geoip2</groupId>
+            <artifactId>geoip2</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.maxmind.db</groupId>
+            <artifactId>maxmind-db</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!--GeoLite2 end-->
+
     </dependencies>
 
     <properties>

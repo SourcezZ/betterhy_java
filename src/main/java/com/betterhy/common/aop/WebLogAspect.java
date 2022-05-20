@@ -1,6 +1,7 @@
 package com.betterhy.common.aop;
 
 import com.alibaba.fastjson.JSON;
+import com.betterhy.common.utils.GetIpUtils;
 import com.betterhy.common.utils.OaUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -43,7 +44,7 @@ public class WebLogAspect {
      * @param joinPoint jpa
      */
     @Before("webLog()")
-    public void doBefore(JoinPoint joinPoint) {
+    public void doBefore(JoinPoint joinPoint) throws Exception {
         // 接收到请求，记录请求内容 记录 最多半年数据迁移 云备份 nosql 数据库
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert attributes != null;
@@ -51,7 +52,7 @@ public class WebLogAspect {
         // 记录下请求内容
         logger.info("URL : " + request.getRequestURL().toString());
         logger.info("HTTP_METHOD : " + request.getMethod());
-        logger.info("IP : " + OaUtils.getClientIpAddr(request));
+        logger.info(GetIpUtils.getCityByIp(OaUtils.getClientIpAddr(request)));
         StringBuilder args = new StringBuilder();
         try {
             if (!request.getContentType().startsWith(FILE_CONTENT_TYPE)){
